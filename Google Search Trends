@@ -1,0 +1,59 @@
+pip install pytrends
+import pandas as pd
+from pytrends.request import TrendReq
+import matplotlib.pyplot as plt
+Trending_topics = TrendReq(hl='en-US', tz=360)
+
+
+kw_list=["Rihanna"]
+Trending_topics.build_payload(kw_list,cat=0, timeframe='today 12-m')
+
+Trending_topics.build_payload(kw_list=["Rihanna"],
+                              cat=0, timeframe='today 12-m')
+data = Trending_topics.interest_over_time()
+data = data.sort_values(by="Rihanna", ascending = False)
+data = data.head(10)
+print(data)
+
+fig, ax = plt.subplots(figsize=(15, 12))
+data['Rihanna'].plot()
+plt.style.use('fivethirtyeight')
+plt.title('Total Google Searches for Rihanna', 
+          fontweight='bold')
+plt.xlabel('Year')
+plt.ylabel('Total Count')
+plt.show()
+
+
+#Next is the **interest_by_region** method, 
+#this will let you know the performance of the keyword per region
+#It will show results on a scale of 0-100, where 100 indicates the country with the most search and 0 indicates with least search or not enough data
+data = Trending_topics.interest_by_region()
+data = data.sort_values(by="Rihanna", 
+                        ascending = False)
+data = data.head(10)
+print(data)
+
+
+data.reset_index().plot(x='geoName', y='Rihanna',
+                        figsize=(10,5), kind="bar")
+plt.style.use('fivethirtyeight')
+plt.show()
+
+
+
+df = Trending_topics.top_charts(2022, hl='en-US', 
+                                tz=300, geo='GLOBAL')
+df.head(10)
+
+
+Trending_topics.build_payload(kw_list=['Rihanna'])
+related_queries = Trending_topics.related_queries()
+related_queries.values()
+
+keywords = Trending_topics.suggestions(
+  keyword='Rihanna')
+df = pd.DataFrame(keywords)
+df.drop(columns= 'mid')
+
+
