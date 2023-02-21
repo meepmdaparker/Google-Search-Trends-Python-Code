@@ -1,1 +1,1 @@
-# Google-Search-Trends-Python-Code
+# In this project, I utilized pytrends, pandas, and matplotlib to take a look at Google Search Trends for various topics (in this case Rihanna), while also creating data visuals to illustrate how the frequency of searches have changed over time and other relevant information demonstrated in my code
